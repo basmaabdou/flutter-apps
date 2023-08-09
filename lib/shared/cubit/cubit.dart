@@ -1,6 +1,7 @@
  import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:section3/shared/cubit/states.dart';
+import 'package:section3/shared/network/local/cache_helper.dart';
 import 'package:sqflite/sqflite.dart';
 
 import '../../modules/archived_tasks/archived_tasks_screen.dart';
@@ -129,11 +130,26 @@ class AppCubit extends Cubit<AppStates> {
 
 
   // to change app from light to dark
-  bool isDark=false;
-  void changeMode(){
-    isDark=! isDark;
-    emit(AppChangeMode());
-  }
+  // bool isDark=false;
+  // void changeMode(){
+  //   isDark=! isDark;
+  //   CacheHelper.putBoolean(key: 'isDark', value: isDark).then((value) {
+  //     emit(AppChangeMode());
+  //   });
+  // }
 
+ // to make the screen take the same color when run
+  bool isDark=false;
+  void changeMode( { bool? fromShared}){
+    if(fromShared != null){
+      isDark=fromShared;
+      emit(AppChangeMode());
+    }else {
+      isDark = !isDark;
+      CacheHelper.putBoolean(key: 'isDark', value: isDark).then((value) {
+        emit(AppChangeMode());
+      });
+    }
+  }
 }
 

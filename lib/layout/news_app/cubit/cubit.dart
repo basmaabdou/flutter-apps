@@ -40,12 +40,11 @@ class NewsCubit extends Cubit<NewsStates>{
     emit(NewsGetBusinessLoadingState());
 
     DioHelper.getData(
-      url: 'v2/everything',
+      url: 'v2/top-headlines',
       query:
       {
-        'q':'tesla',
-        'from':'2023-07-09',
-        'sortBy':'publishedAt',
+        'country':'us',
+        'category': 'business',
         'apiKey':'28988366cd504af9b749397e49c45648',
       },
     ).then((value)
@@ -73,9 +72,10 @@ class NewsCubit extends Cubit<NewsStates>{
         url: 'v2/top-headlines',
         query:
         {
-          'country':'eg',
-          'category':'sports',
-          'apiKey':'65f7f556ec76449fa7dc7c0069f040ca',
+          'country':'us',
+          'from':'2023-07-09',
+          'sortBy':'publishedAt',
+          'apiKey':'28988366cd504af9b749397e49c45648',
         },
       ).then((value)
       {
@@ -106,9 +106,10 @@ class NewsCubit extends Cubit<NewsStates>{
         url: 'v2/top-headlines',
         query:
         {
-          'country':'eg',
-          'category':'science',
-          'apiKey':'65f7f556ec76449fa7dc7c0069f040ca',
+          'sources':'bbc-news',
+          'from':'2023-07-09',
+          'sortBy':'publishedAt',
+          'apiKey':'28988366cd504af9b749397e49c45648',
         },
       ).then((value)
       {

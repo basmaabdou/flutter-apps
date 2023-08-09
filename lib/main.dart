@@ -11,21 +11,34 @@ import 'package:section3/modules/login/login_screen.dart';
 import 'package:section3/shared/bloc_observed.dart';
 import 'package:section3/shared/cubit/cubit.dart';
 import 'package:section3/shared/cubit/states.dart';
+import 'package:section3/shared/network/local/cache_helper.dart';
 import 'package:section3/shared/network/remote/dio_helper.dart';
 
-void main() {
+void main() async{
+  // بيتأكد ان كل حاجه هنا في الميثود خلصت و بعدين يتفح الابلكيشن
+  WidgetsFlutterBinding.ensureInitialized();
+
   Bloc.observer = MyBlocObserver();
   DioHelper.init();
-  runApp(MyApp());
+  await CacheHelper.init();
+
+  // sharedPreference
+  bool? isDark=CacheHelper.getBoolean(key: 'isDark');
+
+  runApp(MyApp(isDark!));
 }
 class MyApp extends StatelessWidget {
   // constructor    (call)
   //build       (call)
 
+  // sharedPreference
+  final bool isDark;
+  MyApp(this.isDark);
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context)  =>AppCubit(AppInitialState),
+      create: (BuildContext context)  =>AppCubit(AppInitialState)..changeMode(fromShared: isDark),
       child: BlocConsumer<AppCubit,AppStates>(
         listener: (context,state){},
         builder: (context,state){
