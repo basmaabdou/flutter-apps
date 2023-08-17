@@ -7,9 +7,7 @@ import 'package:section3/shared/cubit/cubit.dart';
 import 'package:section3/shared/cubit/states.dart';
 import 'package:sqflite/sqflite.dart';
 
-import '../../modules/archived_tasks/archived_tasks_screen.dart';
-import '../../modules/done_tasks/done_tasks_screen.dart';
-import '../../modules/new_tasks/new_tasks_screen.dart';
+
 import '../../shared/componant/constants.dart';
 
 class HomeLayout extends StatelessWidget {

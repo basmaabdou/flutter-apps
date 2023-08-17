@@ -1,10 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:section3/layout/news_app/cubit/states.dart';
-import 'package:section3/modules/buisness/buisness.dart';
-import 'package:section3/modules/science/science.dart';
-import 'package:section3/modules/settings/settings.dart';
-import 'package:section3/modules/sports/sports.dart';
+import 'package:section3/modules/news_app/buisness/buisness.dart';
+import 'package:section3/modules/news_app/science/science.dart';
+import 'package:section3/modules/news_app/sports/sports.dart';
 import 'package:section3/shared/network/remote/dio_helper.dart';
 
 class NewsCubit extends Cubit<NewsStates>{
@@ -69,11 +68,11 @@ class NewsCubit extends Cubit<NewsStates>{
     if(sports.length == 0)
     {
       DioHelper.getData(
-        url: 'v2/top-headlines',
+        url: 'v2/everything',
         query:
         {
-          'country':'us',
-          'from':'2023-07-09',
+          'q':'tesla',
+          'from':'2023-07-15',
           'sortBy':'publishedAt',
           'apiKey':'28988366cd504af9b749397e49c45648',
         },
@@ -106,10 +105,8 @@ class NewsCubit extends Cubit<NewsStates>{
         url: 'v2/top-headlines',
         query:
         {
-          'sources':'bbc-news',
-          'from':'2023-07-09',
-          'sortBy':'publishedAt',
-          'apiKey':'28988366cd504af9b749397e49c45648',
+          'sources':'techcrunch',
+          'apiKey':'28988366cd504af9b749397e49c45648'
         },
       ).then((value)
       {
@@ -126,5 +123,33 @@ class NewsCubit extends Cubit<NewsStates>{
     {
       emit(NewsGetScienceSuccessState());
     }
+  }
+
+  List<dynamic> search = [];
+
+  void getSearch(String value)
+  {
+    emit(NewsGetSearchLoadingState());
+
+    search=[];
+
+    DioHelper.getData(
+      url: 'v2/everything',
+      query:
+      {
+        'q':'$value',
+        'apiKey':'28988366cd504af9b749397e49c45648',
+      },
+    ).then((value)
+    {
+      //print(value.data['articles'][0]['title']);
+      search = value.data['articles'];
+      print(search[0]['title']);
+
+      emit(NewsGetSearchSuccessState());
+    }).catchError((error){
+      print(error.toString());
+      emit(NewsGetSearchErrorState(error.toString()));
+    });
   }
 }

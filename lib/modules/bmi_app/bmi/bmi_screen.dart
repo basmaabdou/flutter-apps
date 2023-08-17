@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:section3/modules/bmi_result/bmi_result_screen.dart';
+import 'package:section3/modules/bmi_app/bmi_result/bmi_result_screen.dart';
 
 class BmiScreen extends StatefulWidget {
 

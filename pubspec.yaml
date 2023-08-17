@@ -43,6 +43,9 @@ dependencies:
   dio: ^5.3.2
   hexcolor: ^3.0.1
   shared_preferences: ^2.1.2
+  webview_flutter: ^2.0.3
+  smooth_page_indicator: ^1.1.0
+  fluttertoast: ^8.1.1
 
 dev_dependencies:
   flutter_test:
@@ -83,11 +86,14 @@ flutter:
   # example:
   # fonts:
   #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
+
+
+
+  fonts:
+    - family: Jannah
+      fonts:
+        - asset: assets/font/jannah.ttf
+  #
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
