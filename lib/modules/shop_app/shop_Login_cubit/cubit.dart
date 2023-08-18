@@ -1,15 +1,16 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:section3/models/login/Shop_login_model.dart';
-import 'package:section3/modules/shop_app/shop_cubit/states.dart';
+import 'package:section3/modules/shop_app/shop_Login_cubit/states.dart';
 import 'package:section3/shared/network/remote/dio_helper.dart';
 import 'package:section3/shared/network/remote/end_point.dart';
 
-class ShopCubit extends Cubit<ShopLoginStates>{
-  ShopCubit() : super(InitialLoginShop());
+import '../../../models/shop_app/Shop_login_model.dart';
 
-  static ShopCubit get(context)=> BlocProvider.of(context);
+class ShopLoginCubit extends Cubit<ShopLoginStates>{
+  ShopLoginCubit() : super(InitialLoginShop());
+
+  static ShopLoginCubit get(context)=> BlocProvider.of(context);
 
   ShopLoginModel? loginModel;
 

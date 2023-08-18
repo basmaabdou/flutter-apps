@@ -1,15 +1,13 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:section3/layout/shop_app/shop_layout.dart';
-import 'package:section3/models/login/Shop_login_model.dart';
-import 'package:section3/modules/basics_app/login/login_screen.dart';
-import 'package:section3/modules/shop_app/shop_cubit/cubit.dart';
-import 'package:section3/modules/shop_app/shop_cubit/states.dart';
 import 'package:section3/modules/shop_app/shop_register/shop_register_screen.dart';
 import 'package:section3/shared/componant/component.dart';
 import 'package:section3/shared/network/local/cache_helper.dart';
+
+import '../shop_Login_cubit/cubit.dart';
+import '../shop_Login_cubit/states.dart';
 
 class ShopLoginScreen extends StatelessWidget {
 
@@ -20,8 +18,8 @@ class ShopLoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  BlocProvider(
-      create: (BuildContext context)=>ShopCubit(),
-      child: BlocConsumer<ShopCubit,ShopLoginStates>(
+      create: (BuildContext context)=>ShopLoginCubit(),
+      child: BlocConsumer<ShopLoginCubit,ShopLoginStates>(
         listener: (context,state){
           if(state is ShopSuccessState) {
             if(state.loginModel.status!){
@@ -95,14 +93,14 @@ class ShopLoginScreen extends StatelessWidget {
                               }
                               return null;
                             },
-                            isPassword: ShopCubit.get(context).isPassword,
-                            suffix: ShopCubit.get(context).suffix,
+                            isPassword: ShopLoginCubit.get(context).isPassword,
+                            suffix: ShopLoginCubit.get(context).suffix,
                             suffixPressed: (){
-                              ShopCubit.get(context).changePasswordIcons();
+                              ShopLoginCubit.get(context).changePasswordIcons();
                             },
                             onSubmit: (value){
                                 if(formKey.currentState!.validate()) {
-                                ShopCubit.get(context).userLogin(
+                                  ShopLoginCubit.get(context).userLogin(
                                 email: emailController.text,
                                 password: passController.text);
                                 }
@@ -118,7 +116,7 @@ class ShopLoginScreen extends StatelessWidget {
                           builder: (context)=>defaultButton(
                             function: (){
                               if(formKey.currentState!.validate()) {
-                                ShopCubit.get(context).userLogin(
+                                ShopLoginCubit.get(context).userLogin(
                                     email: emailController.text,
                                     password: passController.text);
                               }},

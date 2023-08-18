@@ -19,7 +19,8 @@ class CacheHelper{
      required String key
   })
   {
-    return  sharedPreferences!.getBool(key);
+
+    return  sharedPreferences!.get(key);
   }
 
 

@@ -1,20 +1,30 @@
+import '../../modules/shop_app/shop_login/shop_login_screen.dart';
+import '../network/local/cache_helper.dart';
+import 'component.dart';
+
+void signOut(context){
+  CacheHelper.removeDate(key: 'token').then((value) {
+    navigateFinish(context, ShopLoginScreen());
+  });
+}
+
+String? token='';
+// To print full Text
+void printFullText(String text) {
+  final pattern = RegExp('.{1,800}'); // 800 is the size of each chunk
+  pattern.allMatches(text).forEach((match) => print(match.group(0)));
+}
+
+
+
+
+
 // POST
 // UPDATE
 // DELETE
 
 // GET
-
-// base url : https://newsapi.org/
-// method (url) : v2/top-headlines?
-// queries : country=eg&category=business&apiKey=65f7f556ec76449fa7dc7c0069f040ca
-
 // /v2/everything?q=tesla&from=2023-07-09&sortBy=publishedAt&apiKey=28988366cd504af9b749397e49c45648
-
-
-// https://newsapi.org/v2/everything?q=tesla&apiKey=28988366cd504af9b749397e49c45648/
-
-
-
 
 
 // home:startWidget,
@@ -48,3 +58,5 @@
 
 // bool onBoarding = CacheHelper.getData(key: 'onBoarding');
 // String? token=CacheHelper.getData(key: 'token');
+
+
