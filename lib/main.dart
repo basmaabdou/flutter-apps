@@ -71,7 +71,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context)=>NewsCubit(InitialNews())..getBusiness()..getSports()..getScience()),
         BlocProvider(create: (context)=> AppCubit(AppInitialState)..changeMode(fromShared: isDark),),
-        BlocProvider(create: (context)=> ShopCubit()..getHomeData()),
+        BlocProvider(create: (context)=> ShopCubit()..getHomeData()..getCategoriesData()),
       ],
         child: BlocConsumer<AppCubit,AppStates>(
           listener: (context,state){},

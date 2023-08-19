@@ -1,3 +1,4 @@
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/cupertino.dart';
@@ -5,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:section3/layout/shop_app/cubit/cubit.dart';
 import 'package:section3/layout/shop_app/cubit/states.dart';
+import 'package:section3/models/shop_app/shop_categories_model.dart';
 import 'package:section3/models/shop_app/shop_home_model.dart';
+import 'package:section3/shared/componant/component.dart';
 import 'package:section3/shared/styles/colors.dart';
 
 class ShopProductScreen extends StatelessWidget {
@@ -17,17 +20,20 @@ class ShopProductScreen extends StatelessWidget {
       builder: (BuildContext context, ShopStates state) {
         var cubit=ShopCubit.get(context);
         return ConditionalBuilder(
-          condition: cubit.homeModel != null,
-          builder: (BuildContext context) => buildProductBuilder(cubit.homeModel!) ,
+          condition: cubit.homeModel != null && cubit.categoriesModel != null,
+          builder: (BuildContext context) => buildProductBuilder(cubit.homeModel!,cubit.categoriesModel!) ,
           fallback: (BuildContext context) =>Center(child: CircularProgressIndicator()),);
       },
     );
   }
 
+  // show Categories in listView
 
-  Widget  buildProductBuilder(HomeModel model)=> SingleChildScrollView(
+
+  Widget  buildProductBuilder(HomeModel model , CategoriesModel categoriesModel)=> SingleChildScrollView(
     physics: BouncingScrollPhysics(),
     child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CarouselSlider(
             items: model.data!.banners.map((e) => Image(
@@ -49,6 +55,44 @@ class ShopProductScreen extends StatelessWidget {
             )
         ),
         SizedBox(height: 10,),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Categories',
+                style: TextStyle(
+                  fontWeight: FontWeight.w800,
+                  fontSize: 24,
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                height: 100,
+                child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context,index)=> buildCategoryItem(categoriesModel.data!.data![index]),
+                    separatorBuilder: (context,index)=> SizedBox(width: 10,),
+                    itemCount: categoriesModel.data!.data!.length
+                ),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Text(
+                'New Products',
+                style: TextStyle(
+                  fontWeight: FontWeight.w800,
+                  fontSize: 24,
+                ),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(height: 10,),
         Container(
           color: Colors.grey[300],
           child: GridView.count(
@@ -67,6 +111,7 @@ class ShopProductScreen extends StatelessWidget {
       ],
     ),
   );
+
 
   Widget buildGridProduct(ProductModel model)=>Container(
     color: Colors.white,
@@ -145,6 +190,35 @@ class ShopProductScreen extends StatelessWidget {
             ],
           ),
         )
+      ],
+    ),
+  );
+
+
+  Widget buildCategoryItem(DataModel model)=> Container(
+    width: 100,
+    child: Stack(
+      alignment: AlignmentDirectional.bottomStart,
+      children: [
+        Image(
+          image: NetworkImage(model.image!),
+          width: 100,
+          height: 100,
+          fit: BoxFit.cover,
+        ),
+        Container(
+          width: double.infinity,
+          color: Colors.black.withOpacity(.8),
+          child: Text(
+            model.name!,
+            textAlign: TextAlign.center,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+        ),
       ],
     ),
   );

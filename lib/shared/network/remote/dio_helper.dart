@@ -6,6 +6,7 @@ class DioHelper {
   static init() {
     dio = Dio(
       BaseOptions(
+        //الموجود في postman
         baseUrl: 'https://student.valuxapps.com/api/',
         receiveDataWhenStatusError: true,
       ),
@@ -14,7 +15,7 @@ class DioHelper {
 
   static Future<Response> getData({
     required String url,
-     Map<String, dynamic>? query,
+    Map<String, dynamic>? query, // اعتقد خاص ب api
     String lang='en',
     String? token,
   }) async
