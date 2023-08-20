@@ -32,8 +32,7 @@ void main() async{
   bool? isDark = CacheHelper.getData(key: 'isDark',);
   bool? onBoarding= CacheHelper.getData(key: 'onBoarding',);
   token=CacheHelper.getData(key: 'token' );
-  // runApp(MyApp(isDark:isDark ,onBoarding: onBoarding));
- // runApp(MyApp());
+  print(token);
 
   Widget widget;
   if(onBoarding!=null){
@@ -71,7 +70,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context)=>NewsCubit(InitialNews())..getBusiness()..getSports()..getScience()),
         BlocProvider(create: (context)=> AppCubit(AppInitialState)..changeMode(fromShared: isDark),),
-        BlocProvider(create: (context)=> ShopCubit()..getHomeData()..getCategoriesData()),
+        BlocProvider(create: (context)=> ShopCubit()..getHomeData()..getCategoriesData()..getFavorites()),
       ],
         child: BlocConsumer<AppCubit,AppStates>(
           listener: (context,state){},

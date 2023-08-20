@@ -4,6 +4,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:section3/modules/news_app/web_view/web_view_screen.dart';
 import 'package:section3/shared/cubit/cubit.dart';
 
+import '../../layout/shop_app/cubit/cubit.dart';
+import '../styles/colors.dart';
+
 Widget defaultButton({
    double width=double.infinity,
    Color background=Colors.blue,
@@ -334,3 +337,5 @@ Color ChooseToastColor(ToastStates state){
   return color;
 
 }
+
+

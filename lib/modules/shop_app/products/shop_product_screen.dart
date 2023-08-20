@@ -16,12 +16,18 @@ class ShopProductScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  BlocConsumer<ShopCubit,ShopStates>(
-      listener: (BuildContext context, ShopStates state) {  },
+      listener: (BuildContext context, ShopStates state) {
+        if(state is ShopSuccessChangeFavoritesStates){
+          if (!state.model.status!) {
+            messageToast(msg: state.model.message!, state: ToastStates.ERROR);
+          }
+        }
+      },
       builder: (BuildContext context, ShopStates state) {
         var cubit=ShopCubit.get(context);
         return ConditionalBuilder(
           condition: cubit.homeModel != null && cubit.categoriesModel != null,
-          builder: (BuildContext context) => buildProductBuilder(cubit.homeModel!,cubit.categoriesModel!) ,
+          builder: (BuildContext context) => buildProductBuilder(cubit.homeModel!,cubit.categoriesModel!,context) ,
           fallback: (BuildContext context) =>Center(child: CircularProgressIndicator()),);
       },
     );
@@ -30,7 +36,7 @@ class ShopProductScreen extends StatelessWidget {
   // show Categories in listView
 
 
-  Widget  buildProductBuilder(HomeModel model , CategoriesModel categoriesModel)=> SingleChildScrollView(
+  Widget  buildProductBuilder(HomeModel model , CategoriesModel categoriesModel,context)=> SingleChildScrollView(
     physics: BouncingScrollPhysics(),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,7 +110,7 @@ class ShopProductScreen extends StatelessWidget {
             childAspectRatio: 1/1.7,
             children: List.generate(
                 model.data!.products.length,
-                (index) => buildGridProduct(model.data!.products[index]),
+                (index) => buildGridProduct(model.data!.products[index],context),
             ),
           ),
         ),
@@ -113,7 +119,7 @@ class ShopProductScreen extends StatelessWidget {
   );
 
 
-  Widget buildGridProduct(ProductModel model)=>Container(
+  Widget buildGridProduct(ProductModel model,context)=>Container(
     color: Colors.white,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -181,9 +187,17 @@ class ShopProductScreen extends StatelessWidget {
                   ),
                   Spacer(),
                   IconButton(
-                    padding: EdgeInsets.zero,
-                      onPressed: (){},
-                      icon: Icon(Icons.favorite_border)
+                      onPressed: (){
+                        ShopCubit.get(context).changeFavorites(model.id!);
+                      },
+                      icon: CircleAvatar(
+                        backgroundColor: ShopCubit.get(context).favorites[model.id]! ? defaultColor : Colors.grey,
+                        radius: 15,
+                          child: Icon(
+                              Icons.favorite_border,
+                            color: Colors.white,
+                          ),
+                      )
                   )
                 ],
               ),
