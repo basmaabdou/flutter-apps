@@ -3,10 +3,10 @@ class ShopLoginModel{
   String? message;
   UserData? data;
 
-  ShopLoginModel.formJson(Map<String,dynamic> json){
+  ShopLoginModel.fromJson(Map<String,dynamic> json){
     status = json['status'];
     message = json['message'];
-    data = json['data'] != null ? UserData.formJson(json['data']) : null;
+    data = json['data'] != null ? UserData.fromJson(json['data']) : null;
   }
 }
 
@@ -31,7 +31,7 @@ class UserData{
 //     this.token,
 // });
 
-  UserData.formJson(Map<String,dynamic> json){
+  UserData.fromJson(Map<String,dynamic> json){
     id=json['id'];
     name=json['name'];
     email=json['email'];

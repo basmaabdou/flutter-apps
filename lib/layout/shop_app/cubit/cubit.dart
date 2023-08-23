@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:section3/layout/shop_app/cubit/states.dart';
+import 'package:section3/models/shop_app/Shop_login_model.dart';
 import 'package:section3/models/shop_app/change_favorites-model.dart';
 import 'package:section3/models/shop_app/shop_home_model.dart';
 import 'package:section3/modules/news_app/search/search_screen.dart';
@@ -152,7 +153,51 @@ class ShopCubit extends Cubit<ShopStates>{
     });
   }
 
+  ShopLoginModel? userModel;
+  void getUserData()
+  {
+
+    DioHelper.getData(
+      url: PROFILE,
+      token: token
+    ).then((value)
+    {
+      userModel = ShopLoginModel.fromJson(value.data);
+      // print(userModel!.data!.name);
 
 
+      emit(ShopSuccessUserDataStates());
+    }).catchError((error)
+    {
+      print(error.toString());
+      emit(ShopErrorProfileStates());
+    });
+  }
+
+
+  void updateUserData({
+    required String name,
+    required String email,
+    required String phone,
+  }) {
+    emit(ShopLoadingUpdateUserState());
+
+    DioHelper.putData(
+      url: UPDATE_PROFILE,
+      token: token,
+      data: {
+        'name': name,
+        'email': email,
+        'phone': phone,
+      },
+    ).then((value) {
+      userModel = ShopLoginModel.fromJson(value.data);
+      printFullText(userModel!.data!.name!);
+
+      emit(ShopSuccessUpdateUserState(userModel!));
+    }).catchError((error) {
+      print(error.toString());
+      emit(ShopErrorUpdateUserState());
+    });
+  }
 }
-

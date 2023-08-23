@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:section3/modules/shop_app/shop_login/shop_login_screen.dart';
 import 'package:section3/shared/componant/component.dart';
 import 'package:section3/shared/network/local/cache_helper.dart';
 import 'package:section3/shared/styles/colors.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+
+import '../login&register/Login&register_cubit/cubit.dart';
+
+
 
 class BoardingModel{
   final String image;
@@ -45,7 +48,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
 
   void submit(){
     CacheHelper.saveData(key: 'onBoarding', value: true).then((value) {
-      navigateFinish(context, ShopLoginScreen());
+      navigateFinish(context, ShopLoginRegisterCubit());
     });
   }
 

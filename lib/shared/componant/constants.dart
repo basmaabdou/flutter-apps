@@ -1,4 +1,4 @@
-import '../../modules/shop_app/shop_login/shop_login_screen.dart';
+import '../../modules/shop_app/login&register/shop_login_screen.dart';
 import '../network/local/cache_helper.dart';
 import 'component.dart';
 
@@ -9,6 +9,7 @@ void signOut(context){
 }
 
 String? token='';
+
 // To print full Text
 void printFullText(String text) {
   final pattern = RegExp('.{1,800}'); // 800 is the size of each chunk
