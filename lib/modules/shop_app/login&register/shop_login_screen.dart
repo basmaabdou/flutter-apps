@@ -51,7 +51,7 @@ class ShopLoginScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(20.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                      children:  [
                         Text(
                           'LOGIN',
                           style: Theme.of(context).textTheme.headline4!.copyWith(

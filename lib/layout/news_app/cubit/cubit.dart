@@ -33,31 +33,59 @@ class NewsCubit extends Cubit<NewsStates>{
   }
 
   List<dynamic> business = [];
-
+  //1
+  // List<bool> businessSelectedItem = [];
+//2
+  int  selectedBusinessItem=0;
   void getBusiness()
   {
     emit(NewsGetBusinessLoadingState());
 
-    DioHelper.getData(
+    DioHelper.getApiData(
       url: 'v2/top-headlines',
       query:
       {
-        'country':'us',
-        'category': 'business',
-        'apiKey':'28988366cd504af9b749397e49c45648',
+        'sources':'techcrunch',
+        'apiKey':'28988366cd504af9b749397e49c45648'
       },
     ).then((value)
     {
       //print(value.data['articles'][0]['title']);
       business = value.data['articles'];
-      print(business[0]['title']);
+      //to select
+        //1
+      // business.forEach((element) {
+      //   businessSelectedItem.add(false);
+      // });
 
+      print(business[0]['title']);
       emit(NewsGetBusinessSuccessState());
     }).catchError((error){
+      print('yalahwwwwy');
       print(error.toString());
       emit(NewsGetBusinessErrorState(error.toString()));
     });
   }
+  void selectBusinessItem(index){
+    //1
+    // for(int i=0 ;i< businessSelectedItem.length ; i++){
+    //   if(i == index)
+    //     businessSelectedItem[i]=true;
+    //   else
+    //   businessSelectedItem[i]=false;
+    // }
+
+    //2
+    selectedBusinessItem=index;
+    emit(NewsSelectBusinessItemState());
+  }
+  bool isDesktop=false;
+  void setDesktop(bool value){
+    isDesktop=value;
+    emit(NewsSetDesktopState());
+  }
+
+
 
   List<dynamic> sports = [];
 
@@ -67,14 +95,12 @@ class NewsCubit extends Cubit<NewsStates>{
 
     if(sports.length == 0)
     {
-      DioHelper.getData(
-        url: 'v2/everything',
+      DioHelper.getApiData(
+        url: 'v2/top-headlines',
         query:
         {
-          'q':'tesla',
-          'from':'2023-07-15',
-          'sortBy':'publishedAt',
-          'apiKey':'28988366cd504af9b749397e49c45648',
+          'sources':'techcrunch',
+          'apiKey':'28988366cd504af9b749397e49c45648'
         },
       ).then((value)
       {
@@ -101,7 +127,7 @@ class NewsCubit extends Cubit<NewsStates>{
 
     if(science.length == 0)
     {
-      DioHelper.getData(
+      DioHelper.getApiData(
         url: 'v2/top-headlines',
         query:
         {
@@ -133,7 +159,7 @@ class NewsCubit extends Cubit<NewsStates>{
 
     search=[];
 
-    DioHelper.getData(
+    DioHelper.getApiData(
       url: 'v2/everything',
       query:
       {

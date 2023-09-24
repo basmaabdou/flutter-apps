@@ -87,7 +87,7 @@ class MyApp extends StatelessWidget {
               themeMode: AppCubit.get(context).isDark? ThemeMode.dark : ThemeMode.light,
               debugShowCheckedModeBanner: false,
               // home:onBoarding!= null? ShopLoginScreen() : OnBoardingScreen(),
-              home: startWidget,
+              home: NewsLayout(),
             );
           },
         ),

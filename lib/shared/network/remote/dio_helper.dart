@@ -7,9 +7,30 @@ class DioHelper {
     dio = Dio(
       BaseOptions(
         //الموجود في postman
-        baseUrl: 'https://student.valuxapps.com/api/',
+        // baseUrl: 'https://student.valuxapps.com/api/',
+        //Api
+        baseUrl: 'https://newsapi.org/',
         receiveDataWhenStatusError: true,
       ),
+    );
+    //postman
+    // dio=Dio(
+    //   BaseOptions(
+    //     //الموجود في postman
+    //     baseUrl: 'https://student.valuxapps.com/api/',
+    //     receiveDataWhenStatusError: true,
+    //   )
+    // );
+  }
+
+  static Future<Response> getApiData({
+    required String url,
+    required Map<String, dynamic> query,
+  }) async
+  {
+    return await dio!.get(
+      url,
+      queryParameters: query,
     );
   }
 

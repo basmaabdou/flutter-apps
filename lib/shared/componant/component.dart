@@ -1,6 +1,7 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:section3/layout/news_app/cubit/cubit.dart';
 import 'package:section3/modules/news_app/web_view/web_view_screen.dart';
 import 'package:section3/shared/cubit/cubit.dart';
 
@@ -180,91 +181,187 @@ Widget buildTasksEmpty({required List<Map> tasks})=> ConditionalBuilder(
   ),
 );
 
-Widget buildNewsItem(article ,context) => InkWell(
-  onTap: (){
-    navigateTo(context, WebViewScreen(article['url']));
-  },
-  child:   Padding(
+Widget buildNewsItem(article ,context,index) => Container(
+  //selected item
+  color: NewsCubit.get(context).selectedBusinessItem == index && NewsCubit.get(context).isDesktop ? Colors.grey[200] :null,
+  child:   InkWell(
 
-    padding: const EdgeInsets.all(20.0),
+    onTap: (){
+            //enter on webView
+      // navigateTo(context, WebViewScreen(article['url']));
 
-    child: Row(
+          //show detail
+      NewsCubit.get(context).selectBusinessItem(index);
 
-      children: [
+    },
 
-        Container(
+    child:   Padding(
 
-          width: 160,
 
-          height: 160,
 
-          decoration: BoxDecoration(
+      padding: const EdgeInsets.all(20.0),
 
-            borderRadius:BorderRadius.circular(10),
 
-            image: DecorationImage(
 
-              image: NetworkImage('${article['urlToImage']}'),
+      child: Row(
 
-              fit: BoxFit.cover,
 
-            ),
 
-          ),
+        children: [
 
-        ),
 
-        SizedBox(width: 20,),
 
-        Expanded(
+          Container(
 
-          child: Container(
+
+
+            width: 160,
+
+
 
             height: 160,
 
-            child: Column(
 
-              mainAxisSize: MainAxisSize.min,
 
-              crossAxisAlignment: CrossAxisAlignment.start,
+            decoration: BoxDecoration(
 
-              children: [
 
-                Expanded(
 
-                  child: Text(
+              borderRadius:BorderRadius.circular(10),
 
-                    '${article['title']}',
 
-                    maxLines: 3,
 
-                    overflow: TextOverflow.ellipsis,
+              image: DecorationImage(
 
-                    style: Theme.of(context).textTheme.bodyText1,
 
-                  ),
 
-                ),
+                image: NetworkImage('${article['urlToImage']}'),
 
-                SizedBox(height: 10,),
 
-                Text(
 
-                  '${article['publishedAt']}',
+                fit: BoxFit.cover,
 
-                  style: Theme.of(context).textTheme.bodyText2,
 
-                ),
 
-              ],
+              ),
+
+
 
             ),
 
+
+
           ),
 
-        )
 
-      ],
+
+          SizedBox(width: 20,),
+
+
+
+          Expanded(
+
+
+
+            child: Container(
+
+
+
+              height: 160,
+
+
+
+              child: Column(
+
+
+
+                mainAxisSize: MainAxisSize.min,
+
+
+
+                crossAxisAlignment: CrossAxisAlignment.start,
+
+
+
+                children: [
+
+
+
+                  Expanded(
+
+
+
+                    child: Text(
+
+
+
+                      '${article['title']}',
+
+
+
+                      maxLines: 3,
+
+
+
+                      overflow: TextOverflow.ellipsis,
+
+
+
+                      style: Theme.of(context).textTheme.bodyText1,
+
+
+
+                    ),
+
+
+
+                  ),
+
+
+
+                  SizedBox(height: 10,),
+
+
+
+                  Text(
+
+
+
+                    '${article['publishedAt']}',
+
+
+
+                    style: Theme.of(context).textTheme.bodyText2,
+
+
+
+                  ),
+
+
+
+                ],
+
+
+
+              ),
+
+
+
+            ),
+
+
+
+          )
+
+
+
+        ],
+
+
+
+      ),
+
+
 
     ),
 
@@ -280,7 +377,7 @@ Widget articleBuilder(list,{isSearch=false}) => ConditionalBuilder(
 
       physics: BouncingScrollPhysics(),
 
-      itemBuilder: (context,index)=>buildNewsItem(list[index],context),
+      itemBuilder: (context,index)=>buildNewsItem(list[index],context,index),
 
       separatorBuilder:  (context,index)=>myDivider() ,
 

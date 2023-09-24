@@ -54,6 +54,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
 
   var boardController=PageController();
   bool isLast=false;
+
+
   @override
   Widget build(BuildContext context) {
     return  Scaffold(

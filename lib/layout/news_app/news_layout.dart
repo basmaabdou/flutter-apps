@@ -26,13 +26,13 @@ class NewsLayout extends StatelessWidget {
                   onPressed: (){
                     navigateTo(context, SearchScreen());
                   },
-                  icon: Icon(Icons.search)
+                  icon: const Icon(Icons.search)
               ),
               IconButton(
                   onPressed: (){
                     AppCubit.get(context).changeMode();
                   },
-                  icon: Icon(Icons.brightness_4_outlined)
+                  icon: const Icon(Icons.brightness_4_outlined)
               ),
             ],
           ),
@@ -42,7 +42,7 @@ class NewsLayout extends StatelessWidget {
             onTap: (index){
               cubit.changeIndex(index);
             },
-            items: [
+            items: const [
               BottomNavigationBarItem(
                   icon: Icon(Icons.business),
                   label: 'Business',

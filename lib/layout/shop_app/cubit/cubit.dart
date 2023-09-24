@@ -60,6 +60,8 @@ class ShopCubit extends Cubit<ShopStates>{
       // printFullText(homeModel!.data!.banners[0].image!);
       // print(homeModel!.status);
 
+
+      //علشان يعلم عل المفضل ويروح صفحه المفضلات
       homeModel!.data!.products.forEach((element) {
         favorites.addAll({
           element.id! : element.in_favorites!,
